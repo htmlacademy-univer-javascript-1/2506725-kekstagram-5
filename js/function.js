@@ -12,11 +12,15 @@ function isPalindrome (word) {
 }
 
 function findNumbers(phrase) {
-  if(typeof phrase === 'number') return phrase;
+  if(typeof phrase === 'number') {
+    return phrase;
+  }
 
   let result = '';
   for(let i = 0; i < phrase.length; i++) {
-    if(!isNaN(phrase[i])) result += phrase[i];
+    if(!isNaN(phrase[i])) {
+      result += phrase[i];
+    }
   }
   return parseInt(result.replaceAll(' ', ''), 10);
 }
@@ -24,3 +28,5 @@ function findNumbers(phrase) {
 
 // eslint-disable-next-line no-console
 console.log(findNumbers(2023));
+isPalindrome();
+isLonger();

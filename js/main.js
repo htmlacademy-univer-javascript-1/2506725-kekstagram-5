@@ -1,3 +1,3 @@
-import { createPhoto } from './photo-control.js';
+import { drawThumbnails } from './thumbnails-control.js';
 
-const PHOTOS = Array.from({length: 25}, createPhoto);
+drawThumbnails();

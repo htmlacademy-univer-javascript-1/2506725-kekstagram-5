@@ -71,10 +71,10 @@ const onCloseButtonClick = () => {
   document.removeEventListener('keydown', onEscKeydownClose);
 };
 
-const onLoadButtonClick = () => {
+function onLoadButtonClick() {
   curCommentsAmount += COMMENTS_LOAD_STEP;
   renderComments();
-};
+}
 
 const showFullPicture = function(pic) {
   const {url, comments, likes, description} = pic;

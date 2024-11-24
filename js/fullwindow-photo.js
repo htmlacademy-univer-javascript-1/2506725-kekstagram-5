@@ -96,3 +96,5 @@ const showFullPicture = function(pic) {
 };
 
 export {showFullPicture};
+
+//comment

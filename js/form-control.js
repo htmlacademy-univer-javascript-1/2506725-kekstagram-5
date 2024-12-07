@@ -6,11 +6,14 @@ const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadPreview = uploadOverlay.querySelector('.img-upload__preview');
+const hashtag = uploadForm.querySelector('.text__hashtags');
 
 const closeOverlay = function() {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   photoInput.value = '';
+  hashtag.value = '';
+  pristine.reset();
 };
 
 const onEscKeydownClose = function(evt) {

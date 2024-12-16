@@ -1,5 +1,15 @@
 import { drawThumbnails } from './thumbnails-control.js';
-import { renderUploader } from './form-control.js';
+import { closeOverlay, renderUploader } from './form-control.js';
+import { getData } from './data-control.js';
+import { errorAlert } from './util.js';
 
-drawThumbnails();
-renderUploader();
+getData()
+  .then((thumbnails) => {
+    drawThumbnails(thumbnails);
+  })
+  .catch(
+    (err) => {
+      errorAlert(err.message);
+    }
+  );
+renderUploader(closeOverlay);

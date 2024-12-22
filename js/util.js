@@ -23,6 +23,17 @@ const generateRandomUniqueInt = (min, max) => {
   };
 };
 
+const generateRandomUniqueIntArray = (amount, min, max) => {
+  const generator = generateRandomUniqueInt(min, max);
+  const arr = [];
+  let i = 0;
+  while (i < amount) {
+    arr[i] = generator();
+    i++;
+  }
+  return arr;
+};
+
 const errorAlert = (errorMessage) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -83,4 +94,23 @@ const errorSubmitAlert = (template) => {
   document.body.append(alertContainer);
 };
 
-export {errorAlert, getRandomInt, generateRandomUniqueInt, successSubmitAlert, errorSubmitAlert};
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const throttle = (callback, delayBetweenFrames) => {
+  let lastTime = 0;
+  return (...rest) => {
+    const now = new Date();
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+};
+
+export {errorAlert, getRandomInt, generateRandomUniqueInt, successSubmitAlert, errorSubmitAlert, debounce, throttle, generateRandomUniqueIntArray};

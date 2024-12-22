@@ -1,30 +1,31 @@
 const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+const ErrorText = {
+  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
+};
 
-const getData = () => fetch(
-  `${BASE_URL}/data`)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error();
-    }
-    return response.json();
-  })
-  .catch(() => {
-    throw new Error('Не удалось загрузить данные. Попробуйте обновить страницу');
-  });
+const dataLoad = (route, errorText, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, {method, body})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .catch(() => {
+      throw new Error(errorText);
+    });
 
-const sendData = (body) => fetch(
-  `${BASE_URL}`,
-  {
-    method: 'POST',
-    body,
-  })
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error();
-    }
-  })
-  .catch(() => {
-    throw new Error('Не удалось отправить форму. Попробуйте ещё раз');
-  });
+const getData = () => dataLoad(Route.GET_DATA, ErrorText.GET_DATA);
+
+const sendData = (body) => dataLoad(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
 export {getData, sendData};

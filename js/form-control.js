@@ -47,6 +47,8 @@ const closeOverlay = function() {
     effectSlider.noUiSlider.destroy();
   }
   description.value = '';
+  uploadPreview.style.transform = 'scale(100%)';
+  scaleControl.value = '100%';
 };
 
 const onEscKeydownClose = function(evt) {

@@ -4,6 +4,8 @@ import { setEffects } from './effects-control.js';
 import { sendData } from './data-control.js';
 import { errorSubmitAlert, successSubmitAlert } from './util.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const photoInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
@@ -105,8 +107,16 @@ const renderUploader = function(onSuccess) {
   effectContainer.classList.add('hidden');
   setEffects();
   photoInput.addEventListener('change', () => {
+    const file = photoInput.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
     uploadOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
+
+    if (matches) {
+      uploadPreview.querySelector('img').src = URL.createObjectURL(file);
+    }
 
     document.addEventListener('keydown', onEscKeydownClose);
     closeButton.addEventListener('click', onCloseButtonClick);

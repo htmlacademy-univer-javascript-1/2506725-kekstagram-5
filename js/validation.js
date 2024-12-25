@@ -1,3 +1,12 @@
+const MAX_HASHTAG_COUNT = 5;
+const MAX_DESC_LENGTH = 140;
+const Errors = {
+  invalidCount: 'Колчичество хэштегов больше пяти!',
+  invalidUnique: 'Хэштеги не должны повторяться!',
+  invalidReg: 'Некорректный хэштег!'
+};
+let errorType = '';
+
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtag = uploadForm.querySelector('.text__hashtags');
 const description = uploadForm.querySelector('.text__description');
@@ -9,18 +18,15 @@ const pristine = new Pristine(uploadForm, {
   errorTextTag: 'p',
   errorTextClass: 'form__error'
 });
-const maxHashtagCount = 5;
-const errors = {
-  invalidCount: 'Колчичество хэштегов больше пяти!',
-  invalidUnique: 'Хэштеги не должны повторяться!',
-  invalidReg: 'Некорректный хэштег!'
-};
-let errorType = '';
 
-const validateHashtags = function(value) {
-  const hashtags = value.trim().split(/\s+/).filter(Boolean);
+const validateHashtags = (value) => {
+  if (value === undefined) {
+    return true;
+  }
 
-  if (hashtags.length > maxHashtagCount) {
+  const hashtags = value.split(/\s+/).filter(Boolean);
+
+  if (hashtags.length > MAX_HASHTAG_COUNT) {
     errorType = 'invalidCount';
     return false;
   }
@@ -44,12 +50,9 @@ const validateHashtags = function(value) {
   return true;
 };
 
-const maxDescLength = 140;
-const validateDescription = function(value) {
-  return value.length <= maxDescLength;
-};
+const validateDescription = (value) => value.length <= MAX_DESC_LENGTH;
 
-pristine.addValidator(hashtag, validateHashtags, () => errors[errorType]);
+pristine.addValidator(hashtag, validateHashtags, () => Errors[errorType]);
 pristine.addValidator(description, validateDescription, 'Превышена длинна комментария!');
 
 export {validateHashtags, validateDescription, pristine};

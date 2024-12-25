@@ -1,3 +1,5 @@
+const COMMENTS_LOAD_STEP = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').lastElementChild;
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -8,7 +10,6 @@ const pictureComments = bigPicture.querySelector('.social__comments');
 const pictureCommentsCount = bigPicture.querySelector('.social__comment-count');
 const loadButton = bigPicture.querySelector('.social__comments-loader');
 
-const COMMENTS_LOAD_STEP = 5;
 let curCommentsAmount = COMMENTS_LOAD_STEP;
 let curComments = [];
 
@@ -53,7 +54,12 @@ const renderComments = () => {
   curComments.slice(0, curCommentsAmount).forEach(commentAppend);
 };
 
-const closeBigPicture = function() {
+function onLoadButtonClick() {
+  curCommentsAmount += COMMENTS_LOAD_STEP;
+  renderComments();
+}
+
+const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   curCommentsAmount = COMMENTS_LOAD_STEP;
@@ -71,12 +77,7 @@ const onCloseButtonClick = () => {
   document.removeEventListener('keydown', onEscKeydownClose);
 };
 
-function onLoadButtonClick() {
-  curCommentsAmount += COMMENTS_LOAD_STEP;
-  renderComments();
-}
-
-const showFullPicture = function(pic) {
+const showFullPicture = (pic) => {
   const {url, comments, likes, description} = pic;
 
   bigPicture.classList.remove('hidden');

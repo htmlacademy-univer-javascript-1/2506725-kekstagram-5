@@ -1,11 +1,11 @@
 const uploadOverlay = document.querySelector('.img-upload__overlay');
-const uploadPreview = uploadOverlay.querySelector('.img-upload__preview');
+const uploadPreview = uploadOverlay.querySelector('.img-upload__preview').querySelector('img');
 const effectsList = uploadOverlay.querySelector('.effects__list');
 const effectSlider = uploadOverlay.querySelector('.effect-level__slider');
 const effectSliderValue = uploadOverlay.querySelector('.effect-level__value');
 const effectContainer = uploadOverlay.querySelector('.img-upload__effect-level');
 
-const chromeEffect = () => {
+const setChromeEffect = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -22,7 +22,7 @@ const chromeEffect = () => {
   });
 };
 
-const sepiaEffect = () => {
+const setSepiaEffect = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -39,7 +39,7 @@ const sepiaEffect = () => {
   });
 };
 
-const marvinEffect = () => {
+const setMarvinEffect = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -56,7 +56,7 @@ const marvinEffect = () => {
   });
 };
 
-const phobosEffect = () => {
+const setPhobosEffect = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -73,7 +73,7 @@ const phobosEffect = () => {
   });
 };
 
-const heatEffect = () => {
+const setHeatEffect = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 1,
@@ -104,23 +104,23 @@ const setEffects = () => {
           break;
         case 'chrome':
           effectContainer.classList.remove('hidden');
-          chromeEffect();
+          setChromeEffect();
           break;
         case 'sepia':
           effectContainer.classList.remove('hidden');
-          sepiaEffect();
+          setSepiaEffect();
           break;
         case 'marvin':
           effectContainer.classList.remove('hidden');
-          marvinEffect();
+          setMarvinEffect();
           break;
         case 'phobos':
           effectContainer.classList.remove('hidden');
-          phobosEffect();
+          setPhobosEffect();
           break;
         case 'heat':
           effectContainer.classList.remove('hidden');
-          heatEffect();
+          setHeatEffect();
           break;
       }
     }

@@ -1,7 +1,7 @@
 import { drawThumbnails } from './thumbnails-control.js';
 import { closeOverlay, renderUploader } from './form-control.js';
 import { getData } from './data-control.js';
-import { errorAlert } from './util.js';
+import { showErrorAlert } from './util.js';
 import { renderSort } from './sort-control.js';
 
 getData()
@@ -12,7 +12,7 @@ getData()
   })
   .catch(
     (err) => {
-      errorAlert(err.message);
+      showErrorAlert(err.message);
     }
   );
 renderUploader(closeOverlay);

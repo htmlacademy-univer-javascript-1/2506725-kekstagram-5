@@ -1,3 +1,5 @@
+import { onEscKeydownClose } from './form-control.js';
+
 const ALERT_SHOW_TIME = 5000;
 
 const getRandomInt = (min, max) => {
@@ -34,7 +36,7 @@ const generateRandomUniqueIntArray = (amount, min, max) => {
   return arr;
 };
 
-const errorAlert = (errorMessage) => {
+const showErrorAlert = (errorMessage) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
@@ -56,7 +58,7 @@ const errorAlert = (errorMessage) => {
   }, ALERT_SHOW_TIME);
 };
 
-const successSubmitAlert = (template) => {
+const showSuccessSubmitionAlert = (template) => {
   const alertContainer = template.content.querySelector('.success').cloneNode(true);
   const successButton = alertContainer.querySelector('.success__button');
 
@@ -65,8 +67,10 @@ const successSubmitAlert = (template) => {
       alertContainer.remove();
     }
   });
-  document.addEventListener('click', () => {
-    alertContainer.remove();
+  document.addEventListener('click', (evt) => {
+    if (!evt.target.classList.contains('success__inner')) {
+      alertContainer.remove();
+    }
   });
   successButton.addEventListener('click', () => {
     alertContainer.remove();
@@ -75,20 +79,25 @@ const successSubmitAlert = (template) => {
   document.body.append(alertContainer);
 };
 
-const errorSubmitAlert = (template) => {
+const showErrorSubmitionAlert = (template) => {
   const alertContainer = template.content.querySelector('.error').cloneNode(true);
   const errorButton = alertContainer.querySelector('.error__button');
 
   document.addEventListener('keydown', (evt) => {
     if(evt.key === 'Escape'){
       alertContainer.remove();
+      document.addEventListener('keydown', onEscKeydownClose);
     }
   });
-  document.addEventListener('click', () => {
-    alertContainer.remove();
+  document.addEventListener('click', (evt) => {
+    if (!evt.target.classList.contains('error__inner')) {
+      alertContainer.remove();
+      document.addEventListener('keydown', onEscKeydownClose);
+    }
   });
   errorButton.addEventListener('click', () => {
     alertContainer.remove();
+    document.addEventListener('keydown', onEscKeydownClose);
   });
 
   document.body.append(alertContainer);
@@ -102,15 +111,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-const throttle = (callback, delayBetweenFrames) => {
-  let lastTime = 0;
-  return (...rest) => {
-    const now = new Date();
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-};
-
-export {errorAlert, getRandomInt, generateRandomUniqueInt, successSubmitAlert, errorSubmitAlert, debounce, throttle, generateRandomUniqueIntArray};
+export {showErrorAlert, showSuccessSubmitionAlert, showErrorSubmitionAlert, debounce, generateRandomUniqueIntArray};

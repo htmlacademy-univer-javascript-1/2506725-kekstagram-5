@@ -1,9 +1,11 @@
-import { generateRandomUniqueIntArray, errorAlert, debounce } from './util.js';
+import { generateRandomUniqueIntArray, showErrorAlert, debounce } from './util.js';
 import { drawThumbnails } from './thumbnails-control.js';
 import { getData } from './data-control.js';
+
 const RANDOM_SORT_AMOUNT = 10;
 const MIN_ID = 1;
 const MAX_ID = 24;
+
 const thumbnailsContainer = document.querySelector('.pictures');
 const defaultSortButton = document.querySelector('#filter-default');
 const randomSortButton = document.querySelector('#filter-random');
@@ -21,7 +23,7 @@ const renderSort = () => {
       })
       .catch(
         (err) => {
-          errorAlert(err.message);
+          showErrorAlert(err.message);
         }
       );
   });
@@ -39,7 +41,7 @@ const renderSort = () => {
       })
       .catch(
         (err) => {
-          errorAlert(err.message);
+          showErrorAlert(err.message);
         }
       );
   });
@@ -56,7 +58,7 @@ const renderSort = () => {
       })
       .catch(
         (err) => {
-          errorAlert(err.message);
+          showErrorAlert(err.message);
         }
       );
   });

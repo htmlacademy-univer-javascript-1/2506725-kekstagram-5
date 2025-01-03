@@ -1,10 +1,10 @@
 import { showFullPicture } from './fullwindow-photo.js';
 
-const thumbnails = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('a');
 const thumbnailsContainer = document.createDocumentFragment();
 
-const drawThumbnails = function(photos) {
+const drawThumbnails = (photos) => {
+  const thumbnails = document.querySelector('.pictures');
   for (let i = 0; i < photos.length; i++) {
     const thumb = thumbnailTemplate.cloneNode(true);
 
@@ -18,7 +18,7 @@ const drawThumbnails = function(photos) {
 
   thumbnails.appendChild(thumbnailsContainer);
   thumbnails.addEventListener('click', (evt) =>{
-    if (evt.target.id !== '') {
+    if (evt.target.tagName === 'IMG' && evt.target.classList.contains('picture__img')) {
       showFullPicture(photos[evt.target.id]);
     }
   });

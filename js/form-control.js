@@ -1,10 +1,12 @@
 import { pristine, validateHashtags } from './validation.js';
 import { setEffects } from './effects-control.js';
 import { sendData } from './data-control.js';
-import { showErrorSubmitionAlert, showSuccessSubmitionAlert } from './util.js';
+import { isEscKeydown, showErrorSubmitionAlert, showSuccessSubmitionAlert } from './util.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const VALUE_CHANGE_STEP = 25;
+const MIN_SCALE_VALUE = 25;
+const MAX_SCALE_VALUE = 100;
 
 const photoInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -55,10 +57,10 @@ const closeOverlay = () => {
 };
 
 const onEscKeydownClose = (evt) => {
-  if(evt.key === 'Escape'){
+  if (isEscKeydown(evt)) {
     closeOverlay();
+    document.removeEventListener('keydown', onEscKeydownClose);
   }
-  document.removeEventListener('keydown', onEscKeydownClose);
 };
 
 const onCloseButtonClick = () => {
@@ -87,7 +89,7 @@ const setControlFocus = () => {
 const setControlScale = () => {
   smallerButton.addEventListener('click', () => {
     const scaleControlValue = parseInt(scaleControl.value, 10);
-    if (scaleControlValue > 25) {
+    if (scaleControlValue > MIN_SCALE_VALUE) {
       scaleControl.value = `${parseInt(scaleControl.value, 10) - VALUE_CHANGE_STEP}%`;
       uploadPreview.style.transform = `scale(${parseInt(scaleControl.value,10) / 100})`;
     }
@@ -95,7 +97,7 @@ const setControlScale = () => {
 
   biggerButton.addEventListener('click', () => {
     const scaleControlValue = parseInt(scaleControl.value, 10);
-    if (scaleControlValue < 100) {
+    if (scaleControlValue < MAX_SCALE_VALUE) {
       scaleControl.value = `${parseInt(scaleControl.value, 10) + VALUE_CHANGE_STEP}%`;
       uploadPreview.style.transform = `scale(${parseInt(scaleControl.value,10) / 100})`;
     }

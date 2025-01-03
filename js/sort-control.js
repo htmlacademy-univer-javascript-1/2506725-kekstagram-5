@@ -11,57 +11,55 @@ const defaultSortButton = document.querySelector('#filter-default');
 const randomSortButton = document.querySelector('#filter-random');
 const popularSortButton = document.querySelector('#filter-discussed');
 
+const clearThumbs = (evt) => {
+  const containerCopy = thumbnailsContainer.cloneNode(true);
+  const thumbnailsArr = containerCopy.querySelectorAll('a.picture');
+  thumbnailsArr.forEach((thumb) => thumb.remove());
+  document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+  evt.target.classList.add('img-filters__button--active');
+  thumbnailsContainer.parentNode.replaceChild(containerCopy, thumbnailsContainer);
+};
+
 const renderSort = () => {
-  defaultSortButton.addEventListener('click', (evt) => {
-    const thumbnailsArr = thumbnailsContainer.querySelectorAll('a.picture');
-    thumbnailsArr.forEach((thumb) => thumb.remove());
-    document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-    evt.target.classList.add('img-filters__button--active');
+  defaultSortButton.addEventListener('click', debounce((evt) => {
+    clearThumbs(evt);
     getData()
-      .then((thumbs) => {
-        debounce(drawThumbnails(thumbs));
-      })
+      .then((thumbs) => drawThumbnails(thumbs))
       .catch(
         (err) => {
           showErrorAlert(err.message);
         }
       );
-  });
+  }));
 
-  randomSortButton.addEventListener('click', (evt) => {
-    const ids = generateRandomUniqueIntArray(RANDOM_SORT_AMOUNT, MIN_ID, MAX_ID);
-    const thumbnailsArr = thumbnailsContainer.querySelectorAll('a.picture');
-    thumbnailsArr.forEach((thumb) => thumb.remove());
-    document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-    evt.target.classList.add('img-filters__button--active');
+  randomSortButton.addEventListener('click', debounce((evt) => {
     getData()
       .then((thumbs) => {
+        const ids = generateRandomUniqueIntArray(RANDOM_SORT_AMOUNT, MIN_ID, MAX_ID);
+        clearThumbs(evt);
         const choosenThumbs = thumbs.filter((thumb) => ids.includes(thumb.id));
-        debounce(drawThumbnails(choosenThumbs));
+        drawThumbnails(choosenThumbs);
       })
       .catch(
         (err) => {
           showErrorAlert(err.message);
         }
       );
-  });
+  }));
 
-  popularSortButton.addEventListener('click', (evt) => {
-    const thumbnailsArr = thumbnailsContainer.querySelectorAll('a.picture');
-    thumbnailsArr.forEach((thumb) => thumb.remove());
-    document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-    evt.target.classList.add('img-filters__button--active');
+  popularSortButton.addEventListener('click', debounce((evt) => {
     getData()
-      .then((thumbs) => {
+      .then(debounce((thumbs) => {
         const sortedThumbs = thumbs.sort((a, b) => b.comments.length - a.comments.length);
-        debounce(drawThumbnails(sortedThumbs));
-      })
+        clearThumbs(evt);
+        drawThumbnails(sortedThumbs);
+      }))
       .catch(
         (err) => {
           showErrorAlert(err.message);
         }
       );
-  });
+  }));
 };
 
 export {renderSort};

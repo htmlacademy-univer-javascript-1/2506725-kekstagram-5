@@ -1,10 +1,10 @@
 import { showFullPicture } from './fullwindow-photo.js';
 
-const thumbnails = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('a');
 const thumbnailsContainer = document.createDocumentFragment();
 
 const drawThumbnails = (photos) => {
+  const thumbnails = document.querySelector('.pictures');
   for (let i = 0; i < photos.length; i++) {
     const thumb = thumbnailTemplate.cloneNode(true);
 

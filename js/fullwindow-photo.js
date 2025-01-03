@@ -1,3 +1,5 @@
+import { isEscKeydown } from './util.js';
+
 const COMMENTS_LOAD_STEP = 5;
 
 const bigPicture = document.querySelector('.big-picture');
@@ -66,10 +68,10 @@ const closeBigPicture = () => {
 };
 
 const onEscKeydownClose = function(evt) {
-  if(evt.key === 'Escape'){
+  if(isEscKeydown(evt)){
     closeBigPicture();
+    document.removeEventListener('keydown', onEscKeydownClose);
   }
-  document.removeEventListener('keydown', onEscKeydownClose);
 };
 
 const onCloseButtonClick = () => {

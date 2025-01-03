@@ -111,4 +111,6 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {showErrorAlert, showSuccessSubmitionAlert, showErrorSubmitionAlert, debounce, generateRandomUniqueIntArray};
+const isEscKeydown = (evt) => evt.key === 'Escape';
+
+export {showErrorAlert, showSuccessSubmitionAlert, showErrorSubmitionAlert, debounce, generateRandomUniqueIntArray, isEscKeydown };

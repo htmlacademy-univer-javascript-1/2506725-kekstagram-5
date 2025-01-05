@@ -46,7 +46,7 @@ const onSortFormClick = debounce((evt) => {
   }
 });
 
-const onButtonClick = (evt) => {
+const onClickSwithClasses = (evt) => {
   if (evt.target.tagName === 'BUTTON') {
     const activeButton = sortButtonsForm.querySelector('.img-filters__button--active');
     if (activeButton) {
@@ -58,7 +58,7 @@ const onButtonClick = (evt) => {
 
 const renderSort = () => {
   sortButtonsForm.addEventListener('click', onSortFormClick);
-  sortButtonsForm.addEventListener('click', onButtonClick);
+  sortButtonsForm.addEventListener('click', onClickSwithClasses);
 };
 
 
